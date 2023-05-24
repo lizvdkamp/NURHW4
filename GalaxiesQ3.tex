@@ -1,0 +1,188 @@
+\section{Spiral and elliptical galaxies}
+
+In this section we look at question 3 of the fourth hand-in. 
+For this question, I have made use of copied code from tutorial 13 as well as previous hand-ins, where I have created some of the code in collaboration with Evelyn van der Kamp (s2138085).
+In particular, this is about the logistic regression function and parts of the Quasi-Newton minimisation method used in the previous hand-in.
+
+\subsection{Question 3a}
+
+Code for 3(a):
+\lstinputlisting[lastline=34]{NURHW4Q3.py}
+
+For this part of the question, I loaded in the galaxy data text file and separated it into two parts, features, the first four columns, and classes, the last column.
+I then applied feature scaling to have features with mean 0 and standard deviation 1 by taking those features and subtracting the mean of the feature, and dividing it by the standard deviation of the feature.
+I have plotted the distribution of the features in 20 bins, choosing a log scale for the y-axis to show outliers.
+The distribution of the features can be seen in Figure \ref{fig:FD}.
+
+\begin{figure}[ht!]
+\begin{center}
+        \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{FeatureDistributionplot0.png}
+    \end{subfigure}
+    %
+    \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{FeatureDistributionplot1.png}
+    \end{subfigure}
+    %
+     \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{FeatureDistributionplot2.png}
+    \end{subfigure}
+    %
+     \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{FeatureDistributionplot3.png}
+    \end{subfigure}
+    %
+    \caption{A plot showing the distribution of each feature, with a log scale for the amount in the bins.}
+    \label{fig:FD}
+\end{center}
+\end{figure}
+
+
+\lstinputlisting[lastline=10]{Featuresoutput.txt}
+
+Above is the result of the rescaled features, showing the four columns and the first ten rows.
+
+\subsection{Question 3b}
+
+Code for 3(b):
+\lstinputlisting[firstline=34, lastline=234]{NURHW4Q3.py}
+
+For this part of the question, I copied my logistic regression cost function function from the tutorial, as well as my golden section search, which I have used in the previous hand-in as well. 
+I also copied and adjusted the logistic regression function from the tutorial sessions, and implemented a Quasi-Newton minimisation routine within this function, which I have partly copied from the tutorials/the previous hand-in, and have created in collaboration with Evelyn van der Kamp, who has a very similar Quasi-Newton routine.
+
+The logistic regression function minimises the cost function based on a sigmoid function, for given features, classes, for model parameters $\textbf{\theta}$.
+It returns the final minimised $\textbf{\theta}$, as well as all other $\textbf{\theta}$ the function has stepped to during minimisation.
+This function calls itself, which is not ideal, since it takes a lot of memory if there are a lot of iterations, but in this case, the target accuracy was always reached after less than 20 iterations.
+
+I have chosen to run three tests, first chosing the first two columns as features, which are the measure of rotation $\kappa_{CO}$, and the color, since I assume that these two are relatively uncorrelated, unlike for example the color and star formation rate.
+In the second run, I compared the last two columns to compare to the first run, and lastly, I took all four columns as linear features.
+I have started with inital $\textbf{\theta}$ all set to 1, a target accuracy of $10^{-12}$ and a maximum number of iterations of 300, for all three runs.
+
+I calculated the cost function with the $\textbf{\theta}$ from all steps obtained from the logistic regression function and have plotted this.
+The plots can be seen in Figure \ref{fig:First2} (first run), Figure \ref{fig:Last2} (second run), and Figure \ref{fig:All} (third run).
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width=0.9\linewidth]{First2Features.png}
+  \caption{A plot of the value of the cost function versus the amount of steps taken by the minimization routine. Here the features are only the first two columns, $\kappa_{CO}$ and the color.}
+  \label{fig:First2}
+\end{figure}
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width=0.9\linewidth]{Last2Features.png}
+  \caption{A plot of the value of the cost function versus the amount of steps taken by the minimization routine. Here the features are only the last two columns, extendedness and the emission line flux.}
+  \label{fig:Last2}
+\end{figure}
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width=0.9\linewidth]{All2Features.png}
+  \caption{A plot of the value of the cost function versus the amount of steps taken by the minimization routine. Here the features are all four columns.}
+  \label{fig:All}
+\end{figure}
+
+As can be seen from the figures, the second run performs worse than the first and last run, while the first and last run perform similarly and get to a similar final value for the cost function.
+This is because the last two columns do not add much to the model function, their theta value is a lot smaller than of the first two features.
+This most likely means that $\kappa_{CO}$ and the color are most important in determining whether a galaxy is a spiral galaxy or an elliptical galaxy.
+
+\subsection{Question 3c}
+
+Code for 3(c):
+\lstinputlisting[firstline=234]{NURHW4Q3.py}
+
+Using the final $\textbf{\theta}$ obtained from the third run in 3(b), I continue with 3(c).
+I first calculate the sigmoid values corresponding to the final $\textbf{\theta}$ and all four features. 
+Then, I create an array which is 1 when the sigmoid value is larger than 0.5, and is 0 otherwise.
+I compare this model array to the fifth column, classes, of the galaxy dataset, and create a confusion matrix like the one in tutorial 13, assuming class 1 = positive and class 0 = negative.
+The precision is then calculated by taking the [1,1] component of the confusion matrix, the amount of True Positives, divided by the length of the amount of correct classifications.
+The recall is again the amount of True Positives, divided by the True Positives plus the [0,1] component of the confusion matrix, the amount of False Positives.
+
+The F1 score as well as the amount of True/False Positives/Negatives can be seen below.
+
+\lstinputlisting{Testsetoutput.txt}
+
+I have plotted the decision boundary for all pairs of features. 
+The decision boundary is given by $\Sigma_i \theta_i$*feature$_i$ = 0, so for two features, you have that feature$_j = -(\theta_i/\theta_j)$*feature$_i$.
+The plots showing the feature pairs and the decision boundaries can be seen in Figure \ref{fig:DB}.
+
+\begin{figure}[ht!]
+\begin{center}
+        \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{DecisionBoundary01.png}
+    \end{subfigure}
+    %
+    \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{DecisionBoundary02.png}
+    \end{subfigure}
+    %
+     \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{DecisionBoundary03.png}
+    \end{subfigure}
+    %
+     \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{DecisionBoundary12.png}
+    \end{subfigure}
+    %
+         \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{DecisionBoundary13.png}
+    \end{subfigure}
+    %
+     \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{DecisionBoundary23.png}
+    \end{subfigure}
+    %
+    \caption{Showing all four rescaled features plotted against each other, as well as the decision boundary. Zoomed to [-3,3] to show more detail.}
+    \label{fig:DB}
+\end{center}
+\end{figure}
+
+
+I have zoomed the plots to show more detail, cutting off any points lying far outside the range of the rest, as could be seen in the feature distributions plots.
+For almost all of the features except the first two, the decision boundary seems a bit arbitrary, the slope being either almost horizontal or vertical, since the features seem correlated. 
+This confirms my suspicion of the first two features mattering the most to the model because they are the least correlated with each other.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
