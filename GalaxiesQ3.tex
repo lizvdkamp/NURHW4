@@ -60,15 +60,15 @@ Code for 3(b):
 For this part of the question, I copied my logistic regression cost function function from the tutorial, as well as my golden section search, which I have used in the previous hand-in as well. 
 I also copied and adjusted the logistic regression function from the tutorial sessions, and implemented a Quasi-Newton minimisation routine within this function, which I have partly copied from the tutorials/the previous hand-in, and have created in collaboration with Evelyn van der Kamp, who has a very similar Quasi-Newton routine.
 
-The logistic regression function minimises the cost function based on a sigmoid function, for given features, classes, for model parameters $\textbf{\theta}$.
-It returns the final minimised $\textbf{\theta}$, as well as all other $\textbf{\theta}$ the function has stepped to during minimisation.
+The logistic regression function minimises the cost function based on a sigmoid function, for given features, classes, for model parameters \textbf{$\theta$}.
+It returns the final minimised \textbf{$\theta$}, as well as all other \textbf{$\theta$} the function has stepped to during minimisation.
 This function calls itself, which is not ideal, since it takes a lot of memory if there are a lot of iterations, but in this case, the target accuracy was always reached after less than 20 iterations.
 
 I have chosen to run three tests, first chosing the first two columns as features, which are the measure of rotation $\kappa_{CO}$, and the color, since I assume that these two are relatively uncorrelated, unlike for example the color and star formation rate.
 In the second run, I compared the last two columns to compare to the first run, and lastly, I took all four columns as linear features.
-I have started with inital $\textbf{\theta}$ all set to 1, a target accuracy of $10^{-12}$ and a maximum number of iterations of 300, for all three runs.
+I have started with inital \textbf{$\theta$} all set to 1, a target accuracy of $10^{-12}$ and a maximum number of iterations of 300, for all three runs.
 
-I calculated the cost function with the $\textbf{\theta}$ from all steps obtained from the logistic regression function and have plotted this.
+I calculated the cost function with the \textbf{$\theta$} from all steps obtained from the logistic regression function and have plotted this.
 The plots can be seen in Figure \ref{fig:First2} (first run), Figure \ref{fig:Last2} (second run), and Figure \ref{fig:All} (third run).
 
 \begin{figure}[ht!]
@@ -101,8 +101,8 @@ This most likely means that $\kappa_{CO}$ and the color are most important in de
 Code for 3(c):
 \lstinputlisting[firstline=234]{NURHW4Q3.py}
 
-Using the final $\textbf{\theta}$ obtained from the third run in 3(b), I continue with 3(c).
-I first calculate the sigmoid values corresponding to the final $\textbf{\theta}$ and all four features. 
+Using the final \textbf{$\theta$} obtained from the third run in 3(b), I continue with 3(c).
+I first calculate the sigmoid values corresponding to the final \textbf{$\theta$} and all four features. 
 Then, I create an array which is 1 when the sigmoid value is larger than 0.5, and is 0 otherwise.
 I compare this model array to the fifth column, classes, of the galaxy dataset, and create a confusion matrix like the one in tutorial 13, assuming class 1 = positive and class 0 = negative.
 The precision is then calculated by taking the $[1,1]$ component of the confusion matrix, the amount of True Positives, divided by the length of the amount of correct classifications.
