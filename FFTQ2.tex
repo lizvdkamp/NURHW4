@@ -68,38 +68,74 @@ $k^2$ is equal to the coordinates of the grid in this case, so I divide the FT o
 
 Next, I calculated the inverse FT of this by applying the inverse FFT on each of the dimensions of the array, one by one, and took the real part to obtain the potential, $\Phi$, and to remove the small ($\sim 10^{-16}$) imaginary parts left over.
 
+The plots of the potential and the log of the absolute value of the fourier transformed potential for the same slices as in 2(a) can be seen in Figure \ref{fig:Potentialslice} and Figure \ref{fig:Potentiallogslice}.
+
 \begin{figure}[ht!]
 \begin{center}
         \begin{subfigure}{.49\textwidth}
       \centering
-      \includegraphics[width=\linewidth]{Potentialslicez4.png}
+      \includegraphics[width=\linewidth]{Potentialslice4.png}
     \end{subfigure}
     %
     \vspace{-10pt}
     %
     \begin{subfigure}{.49\textwidth}
       \centering
-      \includegraphics[width=\linewidth]{Potentialslicez9.png}
+      \includegraphics[width=\linewidth]{Potentialslice9.png}
     \end{subfigure}
     %
      \vspace{-10pt}
     %
     \begin{subfigure}{.49\textwidth}
       \centering
-      \includegraphics[width=\linewidth]{Potentialslicez11.png}
+      \includegraphics[width=\linewidth]{Potentialslice11.png}
     \end{subfigure}
     %
      \vspace{-10pt}
     %
     \begin{subfigure}{.49\textwidth}
       \centering
-      \includegraphics[width=\linewidth]{Potentialslicez14.png}
+      \includegraphics[width=\linewidth]{Potentialslice14.png}
     \end{subfigure}
     %
     \caption{Colormap of the density contract shown at different z slices.}
     \label{fig:Potentialslice}
 \end{center}
 \end{figure}
+
+\begin{figure}[ht!]
+\begin{center}
+        \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{Potentiallog4.png}
+    \end{subfigure}
+    %
+    \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{Potentiallog9.png}
+    \end{subfigure}
+    %
+     \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{Potentiallog11.png}
+    \end{subfigure}
+    %
+     \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{Potentiallog14.png}
+    \end{subfigure}
+    %
+    \caption{Colormap of the density contract shown at different z slices.}
+    \label{fig:Potentiallogslice}
+\end{center}
+\end{figure}
+
 
 
 
