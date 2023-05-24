@@ -105,8 +105,8 @@ Using the final $\textbf{\theta}$ obtained from the third run in 3(b), I continu
 I first calculate the sigmoid values corresponding to the final $\textbf{\theta}$ and all four features. 
 Then, I create an array which is 1 when the sigmoid value is larger than 0.5, and is 0 otherwise.
 I compare this model array to the fifth column, classes, of the galaxy dataset, and create a confusion matrix like the one in tutorial 13, assuming class 1 = positive and class 0 = negative.
-The precision is then calculated by taking the [1,1] component of the confusion matrix, the amount of True Positives, divided by the length of the amount of correct classifications.
-The recall is again the amount of True Positives, divided by the True Positives plus the [0,1] component of the confusion matrix, the amount of False Positives.
+The precision is then calculated by taking the $[1,1]$ component of the confusion matrix, the amount of True Positives, divided by the length of the amount of correct classifications.
+The recall is again the amount of True Positives, divided by the True Positives plus the $[0,1]$ component of the confusion matrix, the amount of False Positives.
 
 The F1 score as well as the amount of True/False Positives/Negatives can be seen below.
 
