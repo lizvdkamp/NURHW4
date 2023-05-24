@@ -1,0 +1,112 @@
+\section{Calculating forces with the FFT}
+
+In this section we look at question 2 of the fourth hand-in. 
+For this question, I have made use of copied code from tutorial 11, where I have created some of the code in collaboration with Evelyn van der Kamp (s2138085). 
+In particular, this is about the method of taking the FFT of a multidimensional array. 
+
+\subsection{Question 2a}
+
+Code for 2(a):
+\lstinputlisting[lastline=57]{NURHW4LizQ2.py}
+
+In this part of the question, I copied the code from the python script given in the question.
+Afterwards I calculated the density contrast as $\delta = (\rho - \bar{\rho})/\bar{\rho}$, where $\bar{\rho} = 1024/16^3$, as given in the assignment.
+
+The plots showing $\delta$ at the four different $z$ slices, (4.5, 9.5, 11.5, and 14.5), can be seen in Figure \ref{fig:2Dslicea}.
+
+\begin{figure}[ht!]
+\begin{center}
+        \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{2Dslicez4.png}
+    \end{subfigure}
+    %
+    \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{2Dslicez9.png}
+    \end{subfigure}
+    %
+     \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{2Dslicez11.png}
+    \end{subfigure}
+    %
+     \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{2Dslicez14.png}
+    \end{subfigure}
+    %
+    \caption{Colormap of the density contract shown at different z slices.}
+    \label{fig:2Dslicea}
+\end{center}
+\end{figure}
+
+\subsection{Question 2b}
+
+Code for 2(b):
+\lstinputlisting[firstline=57]{NURHW4LizQ2.py}
+
+For this part of the question, I copied my fast fourier transform (FFT) and inverse FFT functions from the tutorial.
+These functions are based on the non-recursive algorithm for the FFT.
+I bit reversed the indices by creating an index array and keeping track of powers of two and then looping over iterations from 1 until 2**(nr of iterations) exceeds the size of the given array.
+For each iteration, the next set of 2^iterations indices of the array equal to index_array[0:2**iterations-2**(iterations-1)]+N/2**iterations.
+Here, N is the size of the array given to the FFT function.
+I create a new array which is shuffled based on the final index array.
+Then I loop over different indices and calculate the even and odd parts of the FT and use those to calculate the final FFT.
+
+The inverse FFT works exactly the same, except the exponent has a minus sign now, and I divide the fnal array by N, the size of the array given to the function.
+
+First I calculate the 3D fourier transformation of the density contrast by applying the FFT on each dimension of the array, one by one.
+The FT of the density contrast is proportional to $k^2$ times the FT of the potential, $\Phi$.
+$k^2$ is equal to the coordinates of the grid in this case, so I divide the FT of the density contrast by the array of grid points squared to obtain the FT of the potential.
+
+Next, I calculated the inverse FT of this by applying the inverse FFT on each of the dimensions of the array, one by one, and took the real part to obtain the potential, $\Phi$, and to remove the small ($\sim 10^{-16}$) imaginary parts left over.
+
+\begin{figure}[ht!]
+\begin{center}
+        \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{Potentialslicez4.png}
+    \end{subfigure}
+    %
+    \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{Potentialslicez9.png}
+    \end{subfigure}
+    %
+     \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{Potentialslicez11.png}
+    \end{subfigure}
+    %
+     \vspace{-10pt}
+    %
+    \begin{subfigure}{.49\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{Potentialslicez14.png}
+    \end{subfigure}
+    %
+    \caption{Colormap of the density contract shown at different z slices.}
+    \label{fig:Potentialslice}
+\end{center}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
