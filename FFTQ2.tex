@@ -55,7 +55,7 @@ Code for 2(b):
 For this part of the question, I copied my fast fourier transform (FFT) and inverse FFT functions from the tutorial.
 These functions are based on the non-recursive algorithm for the FFT.
 I bit reversed the indices by creating an index array and keeping track of powers of two and then looping over iterations from 1 until 2**(nr of iterations) exceeds the size of the given array.
-For each iteration, the next set of 2^iterations indices of the array equal to index_array$[0:2$**iterations-2**(iterations-1)$]+$N/2**iterations.
+For each iteration, the next set of 2**iterations indices of the array equal to index_array$[0:2$**iterations-2**(iterations-1)$]+$N/2**iterations.
 Here, N is the size of the array given to the FFT function.
 I create a new array which is shuffled based on the final index array.
 Then I loop over different indices and calculate the even and odd parts of the FT and use those to calculate the final FFT.
