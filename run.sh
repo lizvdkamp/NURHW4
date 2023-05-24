@@ -17,7 +17,7 @@ python3 NURHW4Q3.py
 
 echo "Generating the pdf"
 
-pdflatex SolutionsLizHW4.tex
-bibtex SolutionsLizHW4.aux
-pdflatex SolutionsLizHW4.tex
-pdflatex SolutionsLizHW4.tex
+pdflatex SolutionsHW4Liz.tex
+bibtex SolutionsHW4Liz.aux
+pdflatex SolutionsHW4Liz.tex
+pdflatex SolutionsHW4Liz.tex
