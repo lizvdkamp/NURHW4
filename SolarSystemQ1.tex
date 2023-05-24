@@ -72,22 +72,32 @@ In this part I have chosen to use Euler's method to do the same as in part 1(b).
 I have chosen Euler's method, because it is similar to the leap frog method, but it gives a very different outcome.
 This is because of what was mentioned before about leap frog conserving the energy, while a forward method like Euler's method adds energy into the system, and thus causes the planets to diverge from their orbits.
 
-The divergence is especially clear in the orbit of Mercury, which ends up near the orbit of Uranus, because of the short period of Mercury, and thus 200 years is more than 200 orbits for Mercury, while it is only a handful of orbits for the outer planets.
+The divergence is especially clear in the orbit of Mercury, which ends up near the orbit of Uranus, because of the short period of Mercury, and thus 200 years is more than 200 orbits for Mercury, while it is only a handful of orbits for the outer planets, and only a little more than 1 orbit for Neptune, so the divergence is less clear the longer the period of the planet.
 
+The same plots as for 1(b) can be seen in Figure \ref{fig:Euxy} and \ref{fig:Eutz}, while a comparison of the x positions of the leap frog and Euler's method can be seen in Figure \ref{fig:LFEdiff}.
 
 \begin{figure}[ht!]
   \centering
-  \includegraphics[width=0.9\linewidth]{SolarSystemLeapFrogxy.png}
-  \caption{A plot of the x and y positions, in AU, of the planets in the solar system, at the current time, 2021-12-07 10:00 until 200 years into the future. The positions and velocities have been integrated using the leap frog method.}
-  \label{fig:SSxy}
+  \includegraphics[width=0.9\linewidth]{SolarSystemEulerxy.png}
+  \caption{A plot of the x and y positions, in AU, of the planets in the solar system, at the current time, 2021-12-07 10:00 until 200 years into the future. The positions and velocities have been integrated using Euler's method.}
+  \label{fig:Euxy}
 \end{figure}
 
 \begin{figure}[ht!]
   \centering
-  \includegraphics[width=0.9\linewidth]{SolarSystemLeapFrogtz.png}
-  \caption{A plot of the time and z positions, in AU, of the planets in the solar system, at the current time, 2021-12-07 10:00 until 200 years into the future. The positions and velocities have been integrated using the leap frog method.}
-  \label{fig:SSxz}
+  \includegraphics[width=0.9\linewidth]{SolarSystemEulertz.png}
+  \caption{A plot of the time and z positions, in AU, of the planets in the solar system, at the current time, 2021-12-07 10:00 until 200 years into the future. The positions and velocities have been integrated using Euler's method.}
+  \label{fig:Euxz}
 \end{figure}
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width=0.9\linewidth]{SolarSystemEulerLeapFrogDiff.png}
+  \caption{A plot of the time versus the difference in x positions, in AU, of the planets in the solar system, at the current time, 2021-12-07 10:00 until 200 years into the future, comparing the leap frog and Euler's method.}
+  \label{fig:LFEdiff}
+\end{figure}
+
+
 
 
 
