@@ -7,7 +7,7 @@ In particular, this is about the logistic regression function and parts of the Q
 \subsection{Question 3a}
 
 Code for 3(a):
-\lstinputlisting[lastline=34]{NURHW4Q3.py}
+\lstinputlisting[lastline=36]{NURHW4Q3.py}
 
 For this part of the question, I loaded in the galaxy data text file and separated it into two parts, features, a bias and the first four columns, and classes, the last column.
 I then applied feature scaling to have features with mean 0 and standard deviation 1 by taking those features and subtracting the mean of the feature, and dividing it by the standard deviation of the feature, to everything except the bias.
@@ -49,7 +49,7 @@ Above is the result of the rescaled features, showing the four columns and the f
 \subsection{Question 3b}
 
 Code for 3(b):
-\lstinputlisting[firstline=34, lastline=234]{NURHW4Q3.py}
+\lstinputlisting[firstline=36, lastline=236]{NURHW4Q3.py}
 
 For this part of the question, I copied my logistic regression cost function function from the tutorial, as well as my golden section search, which I have used in the previous hand-in as well. 
 I also copied and adjusted the logistic regression function from the tutorial sessions, and implemented a Quasi-Newton minimisation routine within this function, which I have partly copied from the tutorials/the previous hand-in, and have created in collaboration with Evelyn van der Kamp, who has a very similar Quasi-Newton routine.
@@ -93,7 +93,7 @@ This most likely means that $\kappa_{CO}$ and the color are most important in de
 \subsection{Question 3c}
 
 Code for 3(c):
-\lstinputlisting[firstline=234]{NURHW4Q3.py}
+\lstinputlisting[firstline=235]{NURHW4Q3.py}
 
 Using the final \textbf{$\theta$} obtained from the third run in 3(b), I continue with 3(c).
 I first calculate the sigmoid values corresponding to the final \textbf{$\theta$} and all four features. 
