@@ -9,8 +9,8 @@ In particular, this is about the logistic regression function and parts of the Q
 Code for 3(a):
 \lstinputlisting[lastline=34]{NURHW4Q3.py}
 
-For this part of the question, I loaded in the galaxy data text file and separated it into two parts, features, the first four columns, and classes, the last column.
-I then applied feature scaling to have features with mean 0 and standard deviation 1 by taking those features and subtracting the mean of the feature, and dividing it by the standard deviation of the feature.
+For this part of the question, I loaded in the galaxy data text file and separated it into two parts, features, a bias and the first four columns, and classes, the last column.
+I then applied feature scaling to have features with mean 0 and standard deviation 1 by taking those features and subtracting the mean of the feature, and dividing it by the standard deviation of the feature, to everything except the bias.
 I have plotted the distribution of the features in 20 bins, choosing a log scale for the y-axis to show outliers.
 The distribution of the features can be seen in Figure \ref{fig:FD}.
 
@@ -107,7 +107,7 @@ The F1 score as well as the amount of True/False Positives/Negatives can be seen
 \lstinputlisting{Testsetoutput.txt}
 
 I have plotted the decision boundary for all pairs of features. 
-The decision boundary is given by $\Sigma_i \theta_i$*feature$_i$ = 0, so for two features, you have that feature$_j = -(\theta_i/\theta_j)$*feature$_i$.
+The decision boundary is given by $\Sigma_i \theta_i$*feature$_i$ = 0, so for two features, you have that feature$_j = -(\theta_i/\theta_j)$*feature$_i$ -$\theta_0/\theta_j$, where $\theta_0$ is the bias.
 The plots showing the feature pairs and the decision boundaries can be seen in Figure \ref{fig:DB}.
 
 \begin{figure}[ht!]
