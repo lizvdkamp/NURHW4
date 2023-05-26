@@ -8,12 +8,14 @@ import timeit
 
 gal_data = np.loadtxt("https://home.strw.leidenuniv.nl/~belcheva/galaxy_data.txt")
 
-features = gal_data[:,:4] 
 classes = gal_data[:,4]
-values = np.array([r"ordered rotation parameter $\kappa_{CO}$", "color", "measure of extendedness", "emission line flux"])
+features = np.vstack((np.ones(classes.size), gal_data[:,0], gal_data[:,1], gal_data[:,2], gal_data[:,3]))
+features = features.T
+print(features.shape)
+values = np.array(["bias",r"ordered rotation parameter $\kappa_{CO}$", "color", "measure of extendedness", "emission line flux"])
 
 #standardization
-for i in range(features[0,:].size):
+for i in range(1,features[0,:].size):
 	#Taking the mean and standard deviation of the features
 	mean0 = np.mean(features[:,i])
 	std0 = np.std(features[:,i])
@@ -23,14 +25,14 @@ for i in range(features[0,:].size):
 	#Plotting
 	plt.hist(features[:,i], bins=20)
 	plt.yscale("log")
-	plt.title("Distribution of scaled feature "+str(i+1)+", "+values[i])
+	plt.title("Distribution of scaled feature "+str(i)+", "+values[i])
 	plt.xlabel("scaled ~"+values[i])
 	plt.ylabel("Number")
-	plt.savefig(f'FeatureDistributionplot{i}.png')
+	plt.savefig(f'FeatureDistributionplot{i-1}.png')
 	plt.close()
 
 # Save a text file
-np.savetxt('Featuresoutput.txt',np.transpose([features[:,0], features[:,1], features[:,2], features[:,3]]))
+np.savetxt('Featuresoutput.txt',np.transpose([features[:,0], features[:,1], features[:,2], features[:,3], features[:,4]]))
 
 #3b
 
@@ -171,9 +173,9 @@ def logreg(x,theta,y, maxit=10**3, acc=10**(-6), H0=None, it=0, tht_pts=None, fu
 	else:
 		return logreg(x,tht_new,y, maxit=maxit, acc=acc, it=it, tht_pts=tht_pts, H0=Hessian_i, func=func, sigmoid=sigmoid)
 
-#first taking only 2 features, I will take rotation and color, since I feel like those are quite unrelated (unlike for example color and star formation rate)
-ftrs = features[:,:2]
-theta_first = np.ones(2)
+#first taking only 2 features (and the bias), I will take rotation and color, since I feel like those are quite unrelated (unlike for example color and star formation rate)
+ftrs = features[:,:3]
+theta_first = np.ones(3)
 theta_sol, thetas = logreg(ftrs, theta_first, classes, maxit=300, acc=10**(-12), it=0)
 
 #print(thetas)
@@ -190,9 +192,9 @@ plt.ylabel("Value of the cost function")
 plt.savefig('First2Features.png')
 plt.close()
 
-#Taking the last 2 features
-ftrs = features[:,2:4]
-theta_first = np.ones(2)
+#Taking the last 2 features (and the bias)
+ftrs = np.vstack((features[:,0],features[:,3],features[:,4])).T
+theta_first = np.ones(3)
 theta_sol, thetas = logreg(ftrs, theta_first, classes, maxit=300, acc=10**(-12), it=0)
 
 #print(thetas)
@@ -211,7 +213,7 @@ plt.close()
 
 #Now taking all 4 features
 #print(features)
-theta_first = np.ones(4)
+theta_first = np.ones(5)
 theta_sol, thetas = logreg(features, theta_first, classes, maxit=300, acc=10**(-12), it=0)
 
 #print(thetas)
@@ -284,8 +286,8 @@ testres['var2'] = testresults
 np.savetxt('Testsetoutput.txt',testres, fmt="%s %10.16f")
 
 #Plotting
-for k1 in range(4):
-	for k2 in range(4):
+for k1 in range(1,5):
+	for k2 in range(1,5):
 		if k1 < k2:
 			x_ftr = features[:,k1]
 			y_ftr = features[:,k2]
@@ -293,15 +295,15 @@ for k1 in range(4):
 			plt.figure(figsize=(12,12))
 			plt.scatter(x_ftr, y_ftr, marker='.')
 			
-			#Decision boundary is given by sum(theta_i)*feature_i = 0, so for two features, you have that feature_j = -(theta_i/theta_j)*feature_i 
-			plt.plot(x_ftr, -(theta_sol[k1]/theta_sol[k2])*x_ftr, color='k', label='decision boundary')
+			#Decision boundary is given by sum(theta_i)*feature_i = 0, so for two features, you have that feature_j = -(theta_i/theta_j)*feature_i -theta_0/theta_j
+			plt.plot(x_ftr, -(theta_sol[k1]/theta_sol[k2])*x_ftr-theta_sol[0]/theta_sol[k2], color='k', label='decision boundary')
 			plt.title("Two features against each other plus decision boundary (zoomed to [-3,3])")
 			plt.xlabel("scaled ~"+values[k1])
 			plt.ylabel("scaled ~"+values[k2])
 			plt.xlim(-3, 3)
 			plt.ylim(-3, 3)
 			plt.legend()
-			plt.savefig(f'DecisionBoundary{k1}{k2}.png')
+			plt.savefig(f'DecisionBoundary{k1-1}{k2-1}.png')
 			plt.close()
 
 #For almost all of the features except the first two, the decision boundary seems a bit arbitrary, since the features seem correlated. This confirms my suspicion of the first two features mattering the most because they are the least correlated with each other.
